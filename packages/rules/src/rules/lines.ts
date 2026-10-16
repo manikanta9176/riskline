@@ -1,5 +1,5 @@
-import type { DiffFile, DiffRow } from "../parse.js";
-import { pathOf } from "../parse.js";
+import type { DiffFile, DiffRow } from "../parse";
+import { pathOf } from "../parse";
 
 export function rowLine(row: DiffRow): number {
   return row.newLine ?? row.oldLine ?? 1;

@@ -1,5 +1,5 @@
-import type { DiffFile } from "../parse.js";
-import type { Finding, Rule } from "../types.js";
+import type { DiffFile } from "../parse";
+import type { Finding, Rule } from "../types";
 
 export function runRules(files: DiffFile[], rules: Rule[]): Finding[] {
   const findings: Finding[] = [];

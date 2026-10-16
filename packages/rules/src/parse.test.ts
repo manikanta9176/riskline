@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { diffFixture, diffs } from "./fixture.js";
-import { parseDiff, pathOf } from "./parse.js";
+import { diffFixture, diffs } from "./fixture";
+import { parseDiff, pathOf } from "./parse";
 
 describe("parseDiff", () => {
   it("records added and removed line numbers from the hunk header", () => {

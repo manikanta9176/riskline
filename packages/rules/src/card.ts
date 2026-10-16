@@ -1,5 +1,5 @@
-import type { DiffFile } from "./parse.js";
-import type { Card, Finding } from "./types.js";
+import type { DiffFile } from "./parse";
+import type { Card, Finding } from "./types";
 
 function findingLine(finding: Finding): string {
   return `- \`${finding.file}\` line ${finding.line} — ${finding.summary}`;

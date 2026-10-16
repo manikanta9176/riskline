@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { analyze } from "./analyze.js";
-import { diffs, diffFixture } from "./fixture.js";
-import { parseDiff } from "./parse.js";
-import { runRules } from "./rules/run.js";
-import type { Finding, Rule } from "./types.js";
+import { analyze } from "./analyze";
+import { diffs, diffFixture } from "./fixture";
+import { parseDiff } from "./parse";
+import { runRules } from "./rules/run";
+import type { Finding, Rule } from "./types";
 
 describe("analyze", () => {
   it("returns no findings for a readme-only diff", () => {

@@ -1,6 +1,6 @@
-import type { DiffFile } from "../parse.js";
-import type { Finding, Rule } from "../types.js";
-import { filePath, rowLine } from "./lines.js";
+import type { DiffFile } from "../parse";
+import type { Finding, Rule } from "../types";
+import { filePath, rowLine } from "./lines";
 
 const readers = [
   /process\.env\.([A-Z][A-Z0-9_]*)/g,

@@ -1,15 +1,15 @@
-import { renderCard } from "./card.js";
-import { parseDiff } from "./parse.js";
-import { authEdit } from "./rules/auth-edit.js";
-import { deletedTest } from "./rules/deleted-test.js";
-import { dependency } from "./rules/dependency.js";
-import { envWithoutExample } from "./rules/env-without-example.js";
-import { migration } from "./rules/migration.js";
-import { removedGraphqlField } from "./rules/removed-graphql-field.js";
-import { removedRoute } from "./rules/removed-route.js";
-import { runRules } from "./rules/run.js";
-import { secret } from "./rules/secret.js";
-import type { Card } from "./types.js";
+import { renderCard } from "./card";
+import { parseDiff } from "./parse";
+import { authEdit } from "./rules/auth-edit";
+import { deletedTest } from "./rules/deleted-test";
+import { dependency } from "./rules/dependency";
+import { envWithoutExample } from "./rules/env-without-example";
+import { migration } from "./rules/migration";
+import { removedGraphqlField } from "./rules/removed-graphql-field";
+import { removedRoute } from "./rules/removed-route";
+import { runRules } from "./rules/run";
+import { secret } from "./rules/secret";
+import type { Card } from "./types";
 
 export const rules = [
   migration,

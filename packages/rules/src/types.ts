@@ -1,4 +1,4 @@
-import type { DiffFile } from "./parse.js";
+import type { DiffFile } from "./parse";
 
 export type Severity = "break" | "check";
 

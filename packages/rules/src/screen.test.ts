@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MAX_DIFF_BYTES, screenDiff } from "./screen.js";
+import { MAX_DIFF_BYTES, screenDiff } from "./screen";
 
 const diff = ["diff --git a/a.txt b/a.txt", "--- a/a.txt", "+++ b/a.txt", "@@ -0,0 +1 @@", "+hi", ""].join("\n");
 

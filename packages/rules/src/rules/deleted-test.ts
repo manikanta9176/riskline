@@ -1,6 +1,6 @@
-import type { DiffFile } from "../parse.js";
-import type { Finding, Rule } from "../types.js";
-import { filePath, firstChangedLine, pathsOf } from "./lines.js";
+import type { DiffFile } from "../parse";
+import type { Finding, Rule } from "../types";
+import { filePath, firstChangedLine, pathsOf } from "./lines";
 
 function isTest(path: string): boolean {
   const name = path.split("/").pop() ?? path;

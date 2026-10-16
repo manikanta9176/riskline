@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { renderCard } from "../card.js";
-import { diffs, diffFixture } from "../fixture.js";
-import { parseDiff } from "../parse.js";
-import { deletedTest } from "./deleted-test.js";
-import { migration } from "./migration.js";
-import { removedGraphqlField } from "./removed-graphql-field.js";
-import { removedRoute } from "./removed-route.js";
-import { secret } from "./secret.js";
+import { renderCard } from "../card";
+import { diffs, diffFixture } from "../fixture";
+import { parseDiff } from "../parse";
+import { deletedTest } from "./deleted-test";
+import { migration } from "./migration";
+import { removedGraphqlField } from "./removed-graphql-field";
+import { removedRoute } from "./removed-route";
+import { secret } from "./secret";
 
 function run(rule: { run: (files: ReturnType<typeof parseDiff>) => unknown[] }, diff: string) {
   return rule.run(parseDiff(diff));

@@ -1,4 +1,4 @@
-import { isUnifiedDiff } from "./parse.js";
+import { isUnifiedDiff } from "./parse";
 
 export const MAX_DIFF_BYTES = 2 * 1024 * 1024;
 

@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { diffs, diffFixture } from "../fixture.js";
-import { parseDiff } from "../parse.js";
-import { authEdit } from "./auth-edit.js";
-import { dependency } from "./dependency.js";
-import { envWithoutExample } from "./env-without-example.js";
+import { diffs, diffFixture } from "../fixture";
+import { parseDiff } from "../parse";
+import { authEdit } from "./auth-edit";
+import { dependency } from "./dependency";
+import { envWithoutExample } from "./env-without-example";
 
 function run(rule: { run: (files: ReturnType<typeof parseDiff>) => unknown[] }, diff: string) {
   return rule.run(parseDiff(diff));

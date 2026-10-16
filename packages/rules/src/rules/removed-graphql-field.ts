@@ -1,6 +1,6 @@
-import type { DiffFile } from "../parse.js";
-import type { Finding, Rule } from "../types.js";
-import { filePath, pathsOf, rowLine } from "./lines.js";
+import type { DiffFile } from "../parse";
+import type { Finding, Rule } from "../types";
+import { filePath, pathsOf, rowLine } from "./lines";
 
 const declaration = /^(type|input|enum|interface|union|scalar|schema|query|mutation|subscription|fragment|directive)\b/;
 const field = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*(\([^)]*\))?\s*:/;

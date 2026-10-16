@@ -1,7 +1,7 @@
-import type { DiffFile, DiffRow } from "../parse.js";
-import { pathOf } from "../parse.js";
-import type { Finding, Rule } from "../types.js";
-import { rowLine } from "./lines.js";
+import type { DiffFile, DiffRow } from "../parse";
+import { pathOf } from "../parse";
+import type { Finding, Rule } from "../types";
+import { rowLine } from "./lines";
 
 const depSections = new Set(["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"]);
 const cargoTables = new Set(["dependencies", "dev-dependencies", "build-dependencies"]);

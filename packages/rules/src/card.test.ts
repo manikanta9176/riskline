@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { renderCard } from "./card.js";
-import type { DiffFile } from "./parse.js";
-import type { Finding } from "./types.js";
+import { renderCard } from "./card";
+import type { DiffFile } from "./parse";
+import type { Finding } from "./types";
 
 const files: DiffFile[] = [
   { oldPath: "a.ts", newPath: "a.ts", binary: false, rows: [] },

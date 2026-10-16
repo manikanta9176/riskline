@@ -1,0 +1,38 @@
+:root {
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f6f7f9;
+  color: #1c1c1c;
+}
+
+main {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 16rem;
+  font: 0.9rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+button {
+  margin-top: 0.75rem;
+  margin-right: 0.5rem;
+}
+
+pre {
+  white-space: pre-wrap;
+  background: white;
+  border: 1px solid #d7d7d7;
+  padding: 1rem;
+}
+
+p[role="alert"] {
+  color: #8a1f1f;
+}
