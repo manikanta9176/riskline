@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
+    "riskline": "pnpm --filter @riskline/cli start",
     "test": "pnpm -r test",
     "dev": "pnpm --filter @riskline/web dev",
     "build": "pnpm -r --if-present build"
