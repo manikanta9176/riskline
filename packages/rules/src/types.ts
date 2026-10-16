@@ -1,3 +1,5 @@
+import type { DiffFile } from "./parse.js";
+
 export type Severity = "break" | "check";
 
 export type Finding = {
@@ -6,6 +8,11 @@ export type Finding = {
   file: string;
   line: number;
   summary: string;
+};
+
+export type Rule = {
+  id: string;
+  run: (files: DiffFile[]) => Finding[];
 };
 
 export type Card = {
