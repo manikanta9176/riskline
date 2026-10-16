@@ -151,6 +151,28 @@ describe("check rules", () => {
     expect(run(dependency, poetry)[0]).toMatchObject({ summary: "Dependency httpx was added." });
   });
 
+  it("flags go.mod require lines", () => {
+    const diff = diffFixture({
+      path: "go.mod",
+      created: true,
+      oldStart: 0,
+      lines: [{ kind: "+", text: "require github.com/acme/widget v0.4.0" }],
+    });
+    expect(run(dependency, diff)[0]).toMatchObject({
+      summary: "Dependency github.com/acme/widget was added.",
+    });
+  });
+
+  it("flags requirements.txt with comparison operators", () => {
+    const diff = diffFixture({
+      path: "requirements.txt",
+      created: true,
+      oldStart: 0,
+      lines: [{ kind: "+", text: "flask<3" }],
+    });
+    expect(run(dependency, diff)[0]).toMatchObject({ summary: "Dependency flask was added." });
+  });
+
   it("flags auth paths by token and ignores author.ts", () => {
     const diff = diffFixture({
       path: "src/auth/session.ts",

@@ -84,7 +84,7 @@ function goTouches(file: DiffFile): Touch[] {
   const touches: Touch[] = [];
   for (const row of file.rows) {
     if (!changed(row)) continue;
-    const match = /^\s*([^\s]+)\s+(v\d\S*)/.exec(row.text);
+    const match = /^\s*(?:require\s+)?([^\s]+)\s+(v\d\S*)/.exec(row.text);
     if (!match) continue;
     touches.push({ name: match[1], text: row.text.trim(), kind: row.kind, line: rowLine(row) });
   }
@@ -94,7 +94,7 @@ function goTouches(file: DiffFile): Touch[] {
 function requirementName(text: string): string | null {
   const trimmed = text.trim();
   if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("-")) return null;
-  const name = trimmed.split(/\[| |==|>=|<=|~=|!=/)[0];
+  const name = trimmed.split(/\[| |===|==|>=|<=|~=|!=|<|>/)[0];
   return name || null;
 }
 
@@ -110,7 +110,7 @@ function requirementTouches(file: DiffFile): Touch[] {
 }
 
 function pepName(value: string): string {
-  return value.split(/ |==|>=|<=|~=|!=/)[0];
+  return value.split(/\[| |===|==|>=|<=|~=|!=|<|>/)[0];
 }
 
 function pyprojectTouches(file: DiffFile): Touch[] {
