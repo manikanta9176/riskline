@@ -101,6 +101,19 @@ describe("check rules", () => {
     expect(run(dependency, lock)).toEqual([]);
   });
 
+  it("ignores package.json fields outside dependency sections", () => {
+    const diff = diffFixture({
+      path: "package.json",
+      lines: [
+        { kind: " ", text: '  "dependencies": {' },
+        { kind: " ", text: '    "zod": "1.0.0"' },
+        { kind: " ", text: "  }," },
+        { kind: "+", text: '  "name": "riskline"' },
+      ],
+    });
+    expect(run(dependency, diff)).toEqual([]);
+  });
+
   it("flags requirements, go.mod, Cargo.toml, and pyproject.toml", () => {
     const requirements = diffFixture({
       path: "requirements.txt",

@@ -47,13 +47,21 @@ function changed(row: DiffRow): row is DiffRow & { kind: "add" | "remove" } {
 function packageJsonTouches(file: DiffFile): Touch[] {
   const touches: Touch[] = [];
   let section: string | null = null;
+  let depth = 0;
   for (const row of file.rows) {
-    const header = /^\s*"([^"]+)"\s*:\s*[{[]/.exec(row.text);
-    if (header) section = header[1];
-    if (!changed(row) || !section || !depSections.has(section)) continue;
-    const pkg = /^\s*"([^"]+)"\s*:\s*"([^"]*)"\s*,?\s*$/.exec(row.text);
-    if (!pkg) continue;
-    touches.push({ name: pkg[1], text: row.text.trim(), kind: row.kind, line: rowLine(row) });
+    if (depth === 0) {
+      const header = /^\s*"([^"]+)"\s*:\s*[{[]/.exec(row.text);
+      if (header) section = header[1];
+    }
+    if (changed(row) && section && depSections.has(section) && depth >= 1) {
+      const pkg = /^\s*"([^"]+)"\s*:\s*"([^"]*)"\s*,?\s*$/.exec(row.text);
+      if (pkg) touches.push({ name: pkg[1], text: row.text.trim(), kind: row.kind, line: rowLine(row) });
+    }
+    for (const ch of row.text) {
+      if (ch === "{" || ch === "[") depth++;
+      else if (ch === "}" || ch === "]") depth--;
+    }
+    if (depth === 0) section = null;
   }
   return touches;
 }
