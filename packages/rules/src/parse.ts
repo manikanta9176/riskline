@@ -39,6 +39,16 @@ function nullIfDevNull(path: string): string | null {
   return path === "/dev/null" ? null : path;
 }
 
+function normalizeDiffPath(raw: string): string | null {
+  if (raw === "/dev/null") return null;
+  let path = raw;
+  const quoted = /^"((?:\\.|[^"])*)"$/.exec(path);
+  if (quoted) {
+    path = quoted[1].replace(/\\"/g, '"');
+  }
+  return nullIfDevNull(stripGitPrefix(path));
+}
+
 function parseGitHeader(line: string): { oldPath: string | null; newPath: string | null } {
   const rest = line.slice("diff --git ".length);
   const quoted = /^"((?:\\.|[^"])*)"\s+"((?:\\.|[^"])*)"$/.exec(rest);
@@ -109,13 +119,13 @@ export function parseDiff(input: string): DiffFile[] {
 
     if (line.startsWith("--- ")) {
       const path = line.slice(4).split("\t")[0];
-      current.oldPath = nullIfDevNull(path === "/dev/null" ? path : stripGitPrefix(path));
+      current.oldPath = normalizeDiffPath(path);
       inHunk = false;
       continue;
     }
     if (line.startsWith("+++ ")) {
       const path = line.slice(4).split("\t")[0];
-      current.newPath = nullIfDevNull(path === "/dev/null" ? path : stripGitPrefix(path));
+      current.newPath = normalizeDiffPath(path);
       inHunk = false;
       continue;
     }

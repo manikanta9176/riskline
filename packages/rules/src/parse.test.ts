@@ -57,6 +57,26 @@ describe("parseDiff", () => {
     expect(file.rows).toEqual([]);
   });
 
+  it("unquotes --- and +++ paths that contain spaces", () => {
+    const diff = [
+      'diff --git "a/my file.ts" "b/my file.ts"',
+      '--- "a/my file.ts"',
+      '+++ "b/my file.ts"',
+      "@@ -1 +1 @@",
+      "-old",
+      "+new",
+      "",
+    ].join("\n");
+    const [file] = parseDiff(diff);
+    expect(pathOf(file)).toBe("my file.ts");
+    expect(file.oldPath).toBe("my file.ts");
+    expect(file.newPath).toBe("my file.ts");
+    expect(file.rows).toEqual([
+      { kind: "remove", text: "old", oldLine: 1, newLine: null },
+      { kind: "add", text: "new", oldLine: null, newLine: 1 },
+    ]);
+  });
+
   it("parses two files", () => {
     const diff = diffs(
       diffFixture({ path: "a.txt", lines: [{ kind: "+", text: "a" }], created: true, oldStart: 0 }),
