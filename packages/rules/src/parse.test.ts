@@ -57,6 +57,16 @@ describe("parseDiff", () => {
     expect(file.rows).toEqual([]);
   });
 
+  it("unquotes rename paths that contain spaces", () => {
+    const diff = ['diff --git "a/old name.txt" "b/new name.txt"', 'rename from "old name.txt"', 'rename to "new name.txt"', "similarity index 100%", ""].join(
+      "\n",
+    );
+    const [file] = parseDiff(diff);
+    expect(file.oldPath).toBe("old name.txt");
+    expect(file.newPath).toBe("new name.txt");
+    expect(file.rows).toEqual([]);
+  });
+
   it("unquotes --- and +++ paths that contain spaces", () => {
     const diff = [
       'diff --git "a/my file.ts" "b/my file.ts"',

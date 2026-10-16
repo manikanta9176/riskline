@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { renderCard } from "../card";
-import { diffs, diffFixture } from "../fixture";
+import { diffFixture } from "../fixture";
 import { parseDiff } from "../parse";
 import { deletedTest } from "./deleted-test";
 import { migration } from "./migration";
@@ -99,6 +99,26 @@ describe("break rules", () => {
         file: "schema.graphql",
         line: 2,
         summary: "GraphQL field removed: user.",
+      },
+    ]);
+  });
+
+  it("flags a removed GraphQL field whose name matches a declaration keyword", () => {
+    const diff = diffFixture({
+      path: "schema.graphql",
+      lines: [
+        { kind: " ", text: "type Query {" },
+        { kind: "-", text: "  mutation: Boolean" },
+        { kind: " ", text: "}" },
+      ],
+    });
+    expect(run(removedGraphqlField, diff)).toEqual([
+      {
+        severity: "break",
+        rule: "removed-graphql-field",
+        file: "schema.graphql",
+        line: 2,
+        summary: "GraphQL field removed: mutation.",
       },
     ]);
   });

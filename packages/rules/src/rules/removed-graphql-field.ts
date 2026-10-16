@@ -2,7 +2,7 @@ import type { DiffFile } from "../parse";
 import type { Finding, Rule } from "../types";
 import { filePath, pathsOf, rowLine } from "./lines";
 
-const declaration = /^(type|input|enum|interface|union|scalar|schema|query|mutation|subscription|fragment|directive)\b/;
+const declaration = /^(type|input|enum|interface|union|scalar|schema|query|mutation|subscription|fragment|directive)\s/;
 const field = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*(\([^)]*\))?\s*:/;
 
 function isGraphql(path: string): boolean {

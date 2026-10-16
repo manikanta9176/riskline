@@ -92,6 +92,62 @@ describe("riskline cli", () => {
     expect(result.stdout).toContain("Database migration changed.");
   });
 
+  it("prints a card when --base main is passed on a feature branch", async () => {
+    const dir = mkdtempSync(path.join(tmpdir(), "riskline-base-main-"));
+    const git = (args: string[]) => spawnSync("git", args, { cwd: dir, encoding: "utf8" });
+    git(["init", "-b", "main"]);
+    git(["config", "user.email", "riskline@example.com"]);
+    git(["config", "user.name", "Riskline"]);
+    writeFileSync(path.join(dir, "README.md"), "# hi\n");
+    git(["add", "README.md"]);
+    git(["commit", "-m", "init"]);
+    git(["checkout", "-b", "feature"]);
+    mkdirSync(path.join(dir, "prisma", "migrations"), { recursive: true });
+    writeFileSync(path.join(dir, "prisma", "migrations", "001.sql"), "create table users ();\n");
+    git(["add", "."]);
+    git(["commit", "-m", "migrate"]);
+    const result = await run(["--base", "main"], {
+      cwd: dir,
+      isTTY: true,
+      readStdin: () => {
+        throw new Error("stdin should not be read");
+      },
+      readFile: () => {
+        throw new Error("file should not be read");
+      },
+    });
+    expect(result.code).toBe(0);
+    expect(result.stdout).toContain("# Riskline");
+    expect(result.stdout).toContain("Database migration changed.");
+    expect(result.stderr).toBe("");
+  });
+
+  it("returns git's own error when an explicit --base does not exist", async () => {
+    const dir = mkdtempSync(path.join(tmpdir(), "riskline-bad-base-"));
+    const git = (args: string[]) => spawnSync("git", args, { cwd: dir, encoding: "utf8" });
+    git(["init", "-b", "main"]);
+    git(["config", "user.email", "riskline@example.com"]);
+    git(["config", "user.name", "Riskline"]);
+    writeFileSync(path.join(dir, "README.md"), "# hi\n");
+    git(["add", "README.md"]);
+    git(["commit", "-m", "init"]);
+    git(["checkout", "-b", "feature"]);
+    const result = await run(["--base", "does-not-exist"], {
+      cwd: dir,
+      isTTY: true,
+      readStdin: () => {
+        throw new Error("stdin should not be read");
+      },
+      readFile: () => {
+        throw new Error("file should not be read");
+      },
+    });
+    expect(result.code).toBe(1);
+    expect(result.stdout).toBe("");
+    expect(result.stderr).not.toContain("No base ref. Pass --base, or create main.");
+    expect(result.stderr).toContain("does-not-exist");
+  });
+
   it("exits 1 when the repo has no main or master", async () => {
     const dir = mkdtempSync(path.join(tmpdir(), "riskline-nobase-"));
     spawnSync("git", ["init", "-b", "trunk"], { cwd: dir, encoding: "utf8" });

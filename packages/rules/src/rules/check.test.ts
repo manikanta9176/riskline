@@ -114,6 +114,19 @@ describe("check rules", () => {
     expect(run(dependency, diff)).toEqual([]);
   });
 
+  it("ignores package.json dependency changes that only differ by a trailing comma", () => {
+    const diff = diffFixture({
+      path: "package.json",
+      lines: [
+        { kind: " ", text: '  "dependencies": {' },
+        { kind: "-", text: '    "zod": "1.0.0",' },
+        { kind: "+", text: '    "zod": "1.0.0"' },
+        { kind: " ", text: "  }" },
+      ],
+    });
+    expect(run(dependency, diff)).toEqual([]);
+  });
+
   it("flags requirements, go.mod, Cargo.toml, and pyproject.toml", () => {
     const requirements = diffFixture({
       path: "requirements.txt",

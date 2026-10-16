@@ -8,6 +8,10 @@ const cargoTables = new Set(["dependencies", "dev-dependencies", "build-dependen
 
 type Touch = { name: string; text: string; kind: "add" | "remove"; line: number };
 
+function normalizeDependencyLine(text: string): string {
+  return text.replace(/,\s*$/, "");
+}
+
 function baseName(file: DiffFile): string {
   const path = pathOf(file);
   return path.split("/").pop() ?? path;
@@ -25,8 +29,8 @@ function toFindings(file: DiffFile, touches: Touch[]): Finding[] {
     const added = list.filter((item) => item.kind === "add");
     const removed = list.filter((item) => item.kind === "remove");
     if (added.length === 0) continue;
-    const addedText = added.map((item) => item.text).sort().join("\n");
-    const removedText = removed.map((item) => item.text).sort().join("\n");
+    const addedText = added.map((item) => normalizeDependencyLine(item.text)).sort().join("\n");
+    const removedText = removed.map((item) => normalizeDependencyLine(item.text)).sort().join("\n");
     const summary = removed.length === 0 ? `Dependency ${name} was added.` : `Dependency ${name} changed version.`;
     if (removed.length !== 0 && addedText === removedText) continue;
     findings.push({

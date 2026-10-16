@@ -32,7 +32,10 @@ export default function Page() {
           <button
             type="button"
             onClick={() => {
-              void navigator.clipboard.writeText(result.card.pullRequest).then(() => setCopied(true));
+              void navigator.clipboard
+                .writeText(result.card.pullRequest)
+                .then(() => setCopied(true))
+                .catch(() => setCopied(false));
             }}
           >
             Copy pull request

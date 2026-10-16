@@ -101,11 +101,11 @@ export function parseDiff(input: string): DiffFile[] {
     if (!current) continue;
 
     if (line.startsWith("rename from ")) {
-      current.oldPath = line.slice("rename from ".length).trim();
+      current.oldPath = normalizeDiffPath(line.slice("rename from ".length).trim());
       continue;
     }
     if (line.startsWith("rename to ")) {
-      current.newPath = line.slice("rename to ".length).trim();
+      current.newPath = normalizeDiffPath(line.slice("rename to ".length).trim());
       continue;
     }
     if (line.startsWith("Binary files ") || line.startsWith("GIT binary patch")) {
