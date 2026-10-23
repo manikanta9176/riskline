@@ -1,0 +1,37 @@
+name: Change request
+description: Ask for a risk the card should catch, or a change to the CLI or web app.
+title: "change: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where does this belong?
+      options:
+        - A new risk rule
+        - A change to an existing rule
+        - CLI
+        - Web
+    validations:
+      required: true
+  - type: textarea
+    id: job
+    attributes:
+      label: What should Riskline catch or do?
+    validations:
+      required: true
+  - type: textarea
+    id: diff
+    attributes:
+      label: Example diff
+      description: Use a fake diff.
+      render: text
+    validations:
+      required: false
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Before you submit
+      options:
+        - label: The example diff is fake.
+          required: true
